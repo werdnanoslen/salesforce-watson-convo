@@ -77,11 +77,19 @@ function updateResponse(res, data) {
             }
         });
     } else if (isTopCustomers) {
-        request(api + '/count', function (error, response, body) {
+        request(api + '/top', function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 var json = JSON.parse(body);
-                var topCustomers = (json.Message === 'This is the Gleanhub API') ? 1 : 0;
-                data.output.text = 'Your top customer is customer #' + topCustomers;
+                var topCustomers = "";
+                for (var i=0; i<json.length; ++i) {
+                    topCustomers += json[i].name;
+                    if (i < json.length-2) {
+                        topCustomers += ', ';
+                    } else if (i === json.length-2){
+                        topCustomers += ', and ';
+                    }
+                }
+                data.output.text = 'Your top ' + json.length + ' customers are ' + topCustomers + '.';
                 return res.json(data);
             }
         });
