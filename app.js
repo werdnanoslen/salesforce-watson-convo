@@ -67,12 +67,16 @@ function updateResponse(res, data) {
     var api = 'https://workforce-server.herokuapp.com/v1/accounts';
     var isNumCustomers = checkIntent(data, 'numCustomers');
     var isTopCustomers = checkIntent(data, 'topCustomers');
+    var isOpportunities = checkIntent(data, 'opportunities');
     if (isNumCustomers) {
         request(api + '/count', function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 var json = JSON.parse(body);
                 var numCustomers = json.count;
                 data.output.text = 'You have ' + numCustomers + ' customers';
+                return res.json(data);
+            } else {
+                data.output.text = 'Sorry, there was an error with that API call.';
                 return res.json(data);
             }
         });
@@ -90,6 +94,29 @@ function updateResponse(res, data) {
                     }
                 }
                 data.output.text = 'Your top ' + json.length + ' customers are ' + topCustomers + '.';
+                return res.json(data);
+            } else {
+                data.output.text = 'Sorry, there was an error with that API call.';
+                return res.json(data);
+            }
+        });
+    } else if (isOpportunities) {
+        request(api + '/opportunities', function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                var json = JSON.parse(body);
+                var opportunities = "";
+                for (var i=0; i<json.length; ++i) {
+                    opportunities += json[i].name;
+                    if (i < json.length-2) {
+                        opportunities += ', ';
+                    } else if (i === json.length-2){
+                        opportunities += ', and ';
+                    }
+                }
+                data.output.text = 'Your top opportunities are ' + opportunities;
+                return res.json(data);
+            } else {
+                data.output.text = 'Sorry, there was an error with that API call.';
                 return res.json(data);
             }
         });
