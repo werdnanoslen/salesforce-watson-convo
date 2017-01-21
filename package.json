@@ -13,15 +13,12 @@
     "autofix": "eslint --fix .",
     "codecov": "npm run test && (codecov || true)"
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/watson-developer-cloud/conversation-simple.git"
-  },
   "license": "Apache-2.0",
   "dependencies": {
     "body-parser": "^1.15.2",
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
+    "request": "^2.79.0",
     "watson-developer-cloud": "^2.8.1"
   },
   "devDependencies": {
@@ -31,7 +28,6 @@
     "eslint": "^2.8.0",
     "istanbul": "^0.4.2",
     "mocha": "^2.4.5",
-    "phantomjs-prebuilt": "^2.1.13",
     "supertest": "^1.2.0"
   },
   "engine": {

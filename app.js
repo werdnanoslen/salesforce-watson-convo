@@ -1,5 +1,6 @@
 /**
  * Copyright 2015 IBM Corp. All Rights Reserved.
+ * Modifications by Andrew Nelson <andy@andyhub.com> follow this same licensing.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +20,7 @@
 var express = require('express'); // app server
 var bodyParser = require('body-parser'); // parser for post requests
 var Conversation = require('watson-developer-cloud/conversation/v1'); // watson sdk
-
+var request = require('request');
 var app = express();
 
 // Bootstrap application settings
@@ -58,40 +59,39 @@ app.post('/api/message', function(req, res) {
     if (err) {
       return res.status(err.code || 500).json(err);
     }
-    return res.json(updateMessage(payload, data));
+    updateResponse(res, data)
   });
 });
 
-/**
- * Updates the response text using the intent confidence
- * @param  {Object} input The request to the Conversation service
- * @param  {Object} response The response from the Conversation service
- * @return {Object}          The response with the updated message
- */
-function updateMessage(input, response) {
-  var responseText = null;
-  if (!response.output) {
-    response.output = {};
-  } else {
-    return response;
-  }
-  if (response.intents && response.intents[0]) {
-    var intent = response.intents[0];
-    // Depending on the confidence of the response the app can return different messages.
-    // The confidence will vary depending on how well the system is trained. The service will always try to assign
-    // a class/intent to the input. If the confidence is low, then it suggests the service is unsure of the
-    // user's intent . In these cases it is usually best to return a disambiguation message
-    // ('I did not understand your intent, please rephrase your question', etc..)
-    if (intent.confidence >= 0.75) {
-      responseText = 'I understood your intent was ' + intent.intent;
-    } else if (intent.confidence >= 0.5) {
-      responseText = 'I think your intent was ' + intent.intent;
+function updateResponse(res, data) {
+    var api = 'https://workforce-server.herokuapp.com/v1/accounts';
+    var isNumCustomers = checkIntent(data, 'numCustomers');
+    var isTopCustomers = checkIntent(data, 'topCustomers');
+    if (isNumCustomers) {
+        request(api + '/count', function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                var json = JSON.parse(body);
+                var numCustomers = json.count;
+                data.output.text = 'You have ' + numCustomers + ' customers';
+                return res.json(data);
+            }
+        });
+    } else if (isTopCustomers) {
+        request(api + '/count', function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                var json = JSON.parse(body);
+                var topCustomers = (json.Message === 'This is the Gleanhub API') ? 1 : 0;
+                data.output.text = 'Your top customer is customer #' + topCustomers;
+                return res.json(data);
+            }
+        });
     } else {
-      responseText = 'I did not understand your intent';
+        return res.json(data);
     }
-  }
-  response.output.text = responseText;
-  return response;
 }
+
+function checkIntent(data, intent) {
+    return data.intents && data.intents.length > 0 && data.intents[0].intent === intent;
+};
 
 module.exports = app;
