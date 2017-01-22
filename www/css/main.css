@@ -1047,36 +1047,18 @@ input::-moz-focus-inner {
 header {
 	padding-bottom: 15.6rem;
 }
-header .logo a {
+header .logo img {
 	display: block;
-	margin: 0;
-	padding: 0;
-	outline: 0;
-	border: none;
+    width: 100px;
+    margin: 0 auto;
     margin-top: 30px;
-	height: 20px;
-	background: url("../images/logo.png") no-repeat center;
-	background-size: 96px 20px;
-	font: 0/0 a;
-	text-shadow: none;
-	color: transparent;
+	padding: 0;
 	-moz-transition: all 0.5s ease-in-out;
 	-o-transition: all 0.5s ease-in-out;
 	-webkit-transition: all 0.5s ease-in-out;
 	-ms-transition: all 0.5s ease-in-out;
 	transition: all 0.5s ease-in-out;
 }
-
-/* -------------------------------------------------------------------
- * responsive:
- * header section
- * ------------------------------------------------------------------- */
-@media only screen and (max-width:768px) {
-	header .logo {
-		top: 33px;
-	}
-}
-
 
 /* ===================================================================
  * 10. main content wrap - (_layout.scss)
@@ -1142,13 +1124,6 @@ header .logo a {
 #intro .buttons .button:focus {
 	border: 3px solid #f9da4f;
 	color: #f9da4f;
-}
-
-#intro img {
-	vertical-align: bottom;
-	max-width: 840px;
-	width: 100%;
-	box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.3);
 }
 
 .shadow-overlay {
