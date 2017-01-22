@@ -1114,16 +1114,16 @@ header .logo img {
 	margin-bottom: 4.2rem;
 }
 
-#intro .buttons .button {
-	border: 3px solid rgba(255, 255, 255, 0.6);
-	color: white;
-	margin: 0 .9rem;
+#intro .buttons .button, .andy {
+	border: 3px solid rgba(255, 255, 255, 0.6) !important;
+	color: white !important;
+	margin: 0 .9rem !important;
 }
 
 #intro .buttons .button:hover,
-#intro .buttons .button:focus {
-	border: 3px solid #f9da4f;
-	color: #f9da4f;
+#intro .buttons .button:focus, .andy:hover, .andy:focus {
+	border: 3px solid #FEBA3F !important;
+	color: #FEBA3F !important;
 }
 
 .shadow-overlay {
@@ -1418,7 +1418,7 @@ header .logo img {
 
 #subscribe #mc-form .button:hover,
 #subscribe #mc-form .button:focus {
-	background: #f9da4f;
+	background: #FEBA3F;
 }
 
 #subscribe #mc-form label {
@@ -1514,7 +1514,7 @@ footer a:visited {
 footer a:hover,
 footer a:focus,
 footer a:active {
-	color: #f9da4f;
+	color: #FEBA3F;
 	outline: 0;
 }
 
@@ -1545,7 +1545,7 @@ footer a:active {
 .footer-social-list li a:hover,
 .footer-social-list li a:focus,
 .footer-social-list li a:active {
-	color: #f9da4f;
+	color: #FEBA3F;
 }
 
 .footer-social-list li:first-child a {
