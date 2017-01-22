@@ -126,11 +126,11 @@ function updateResponse(res, data) {
             if (!error && response.statusCode == 200) {
                 var json = JSON.parse(body);
                 var opportunities = "";
-                for (var i=0; i<json.length; ++i) {
-                    opportunities += json[i].name + ' (' + json[i].chance + ')';
-                    if (i < json.length-2) {
+                for (var i=0; i<5; ++i) {
+                    opportunities += json[i].prediction;
+                    if (i < 3) {
                         opportunities += ', ';
-                    } else if (i === json.length-2){
+                    } else if (i === 3){
                         opportunities += ', and ';
                     }
                 }
