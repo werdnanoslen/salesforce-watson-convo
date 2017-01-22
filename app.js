@@ -64,12 +64,12 @@ app.post('/api/message', function(req, res) {
 });
 
 function updateResponse(res, data) {
-    var api = 'https://workforce-server.herokuapp.com/v1/accounts';
+    var api = 'https://workforce-server.herokuapp.com/v1';
     var isNumCustomers = checkIntent(data, 'numCustomers');
     var isTopCustomers = checkIntent(data, 'topCustomers');
     var isOpportunities = checkIntent(data, 'opportunities');
     if (isNumCustomers) {
-        request(api + '/count', function (error, response, body) {
+        request(api + '/accounts/count', function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 var json = JSON.parse(body);
                 var numCustomers = json.count;
@@ -81,7 +81,7 @@ function updateResponse(res, data) {
             }
         });
     } else if (isTopCustomers) {
-        request(api + '/top', function (error, response, body) {
+        request(api + '/accounts/top', function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 var json = JSON.parse(body);
                 var topCustomers = "";
