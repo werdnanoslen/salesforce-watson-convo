@@ -68,6 +68,7 @@ function updateResponse(res, data) {
     var isNumCustomers = checkIntent(data, 'numCustomers');
     var isTopCustomers = checkIntent(data, 'topCustomers');
     var isOpportunities = checkIntent(data, 'opportunities');
+    var isClosingOpportunities = checkIntent(data, 'closingOpportunities');
     if (isNumCustomers) {
         request(api + '/accounts/count', function (error, response, body) {
             if (!error && response.statusCode == 200) {
@@ -106,7 +107,7 @@ function updateResponse(res, data) {
                 var json = JSON.parse(body);
                 var opportunities = "";
                 for (var i=0; i<json.length; ++i) {
-                    opportunities += json[i].name;
+                    opportunities += json[i].name + '(' + json[i].expected_revenue + ')';
                     if (i < json.length-2) {
                         opportunities += ', ';
                     } else if (i === json.length-2){
@@ -114,6 +115,26 @@ function updateResponse(res, data) {
                     }
                 }
                 data.output.text = 'Your top opportunities are ' + opportunities;
+                return res.json(data);
+            } else {
+                data.output.text = 'Sorry, there was an error with that API call.';
+                return res.json(data);
+            }
+        });
+    } else if (isClosingOpportunities) {
+        request(api + '/opportunities/chances', function (error, response, body) {
+            if (!error && response.statusCode == 200) {
+                var json = JSON.parse(body);
+                var opportunities = "";
+                for (var i=0; i<json.length; ++i) {
+                    opportunities += json[i].name + ' (' + json[i].chance + ')';
+                    if (i < json.length-2) {
+                        opportunities += ', ';
+                    } else if (i === json.length-2){
+                        opportunities += ', and ';
+                    }
+                }
+                data.output.text = 'Your opportunities with the top chances are ' + opportunities;
                 return res.json(data);
             } else {
                 data.output.text = 'Sorry, there was an error with that API call.';
