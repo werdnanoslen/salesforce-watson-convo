@@ -107,7 +107,7 @@ function updateResponse(res, data) {
                 var json = JSON.parse(body);
                 var opportunities = "";
                 for (var i=0; i<json.length; ++i) {
-                    opportunities += json[i].name + ' ($' + json[i].expected_revenue.toFixed(2) + ')';
+                    opportunities += json[i].name + ' ($' + json[i].expected_revenue + ')';
                     if (i < json.length-2) {
                         opportunities += ', ';
                     } else if (i === json.length-2){
