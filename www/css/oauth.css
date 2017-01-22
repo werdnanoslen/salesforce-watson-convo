@@ -1,0 +1,99 @@
+.middle {
+	margin: 30px auto;
+}
+
+div.after {
+	height: 1px;
+	border-bottom: 1px #ececec solid;
+}
+
+.head {
+	height: 80px;
+}
+
+.icons img {
+	width: 80px;
+	height: 80px;
+	margin: 12px;
+}
+
+.icons {
+	margin: auto;
+	width: 208px;
+	font-size: 0;
+}
+
+h1 {
+	text-align: center;
+	font-size: 20px;
+	font-weight: 300;
+	color: #1D3649;
+}
+
+h1 .watson {
+	font-size: 20px;
+	font-weight: 400;
+}
+
+h2 {
+	text-align: center;
+	font-size: 18px;
+	font-weight: 300;
+	color: #1D3649;
+}
+
+div.form {
+	text-align: center;
+	margin: auto;
+	font-size: 15px;
+	font-weight: 300;
+	color: #6d7777;
+}
+
+div.button {
+	margin: auto;
+}
+
+div.button button.accept {
+    color: white;
+    background-color: #4178be;
+    margin: 5px;
+    width: 120px;
+    line-height: 28px;
+    font-size: 14px;
+    padding: 0 10px;
+    border: 1px solid #4178BE;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+div.button button.accept:hover,
+div.button button.accept:focus,
+div.button button.accept:active {
+    background-color: white;
+    border: 1px solid #4178BE;
+    color: #4178BE;
+}
+
+div.button button.cancel {
+    margin: 5px;
+    line-height: 28px;
+    font-size: 14px;
+    padding: 0 10px;
+    margin: 0 20px 0 40px;
+    cursor: pointer;
+    color: #777677; /*#D2D6D6;*/
+    background-color: white;
+    border: none;
+}
+
+div.button button.cancel:hover,
+div.button button.cancel:focus,
+div.button button.cancel:active {
+    border-bottom: 2px solid #777677;
+}
+
+body {
+	font-family: Helvetica Neue for IBM, Helvetica Neue, Helvetica, Arial,
+		Roboto;
+}
