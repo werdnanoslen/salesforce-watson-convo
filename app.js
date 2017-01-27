@@ -113,7 +113,7 @@ function updateResponse(app_id, res, data) {
                 data.output.text = 'Your top ' + json.length + ' customers are ' + topCustomers + '.';
                 return res.json(data);
             } else {
-                data.output.text = 'Sorry, there was an error with that API call.';
+                data.output.text = body;
                 return res.json(data);
             }
         });
