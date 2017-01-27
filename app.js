@@ -57,20 +57,36 @@ app.post('/api/message', function(req, res) {
   // Send the input to the conversation service
   conversation.message(payload, function(err, data) {
     if (err) {
+        console.log(err);
       return res.status(err.code || 500).json(err);
     }
-    updateResponse(res, data)
+    updateResponse(req.body.app_id, res, data)
   });
 });
 
-function updateResponse(res, data) {
+
+function getRequestOptions(app_id, resource_path){
+    var host = process.env.WF_HOST_URL || 'https://workforce-server.herokuapp.com/v1'
+    var options = {
+          url: host + resource_path,
+          headers: {
+            'x-app-id': app_id
+          }
+    };
+    return options;
+}
+/**
+    App_id is the slack team ID
+**/
+function updateResponse(app_id, res, data) {
     var api = 'https://workforce-server.herokuapp.com/v1';
     var isNumCustomers = checkIntent(data, 'numCustomers');
     var isTopCustomers = checkIntent(data, 'topCustomers');
     var isOpportunities = checkIntent(data, 'opportunities');
     var isClosingOpportunities = checkIntent(data, 'closingOpportunities');
+    
     if (isNumCustomers) {
-        request(api + '/accounts/count', function (error, response, body) {
+        request(getRequestOptions(app_id, '/accounts/count'), function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 var json = JSON.parse(body);
                 var numCustomers = json.count;
@@ -82,7 +98,7 @@ function updateResponse(res, data) {
             }
         });
     } else if (isTopCustomers) {
-        request(api + '/accounts/top', function (error, response, body) {
+        request(getRequestOptions(app_id, '/accounts/top'), function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 var json = JSON.parse(body);
                 var topCustomers = "";
@@ -102,7 +118,7 @@ function updateResponse(res, data) {
             }
         });
     } else if (isOpportunities) {
-        request(api + '/opportunities', function (error, response, body) {
+        request(getRequestOptions(app_id, '/opportunities'), function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 var json = JSON.parse(body);
                 var opportunities = "";
@@ -122,7 +138,7 @@ function updateResponse(res, data) {
             }
         });
     } else if (isClosingOpportunities) {
-        request(api + '/opportunities/chances', function (error, response, body) {
+        request(getRequestOptions(app_id, '/opportunities/chances'), function (error, response, body) {
             if (!error && response.statusCode == 200) {
                 var json = JSON.parse(body);
                 var opportunities = "";
